@@ -1,4 +1,4 @@
-# SaveImage
+# SaveImage (only iOS)
 
 This plugin allows you to save local JPEG image files to the iOS Camera Roll/Photo Library or Android Gallery. Other image mime types are currently not supported.
 The image file to be saved to the Library/Gallery must be available on the device.
@@ -11,44 +11,22 @@ The plugin is based on code seen in several other existing plugins:
 
 Thanks to all of the above mentioned authors for sharing their code openly.
 
-    cordova plugin add cordova-plugin-save-image
+    cordova plugin add https://github.com/Qik-Company/cordova-plugin-save-image.git
 
 ## Methods
 
 - cordova.plugins.imagesaver.saveImageToGallery
-
-## Properties
-
-none
-
-# API reference
-
-# imagesaver.saveImageToGallery
-
-Save a local JPEG image to the device gallery / camera roll.
-
-    cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, successCallback, errorCallback);
-
-## Supported Platforms
-
-- iOS, Android
+- cordova.plugins.imagesaver.saveVideoToGallery
 
 ## Usage Example
-
-Call the `window.cordova.plugins.imagesaver.saveImageToGallery()` method passing 3 parameters: 1. The native image path for the image to be saved, 2. success callback, 3. error callback
-
-### Example
 
 ```
 
 // iOS with file prefix: var nativePathToJpegImage = 'file:///var/mobile/Containers/Data/Application/<UUID>/Library/NoCloud/some_dir/some_image.jpg'
 // iOS without file prefix: var nativePathToJpegImage = '/var/mobile/Containers/Data/Application/<UUID>/Library/NoCloud/some_dir/some_image.jpg'
-// Android with file prefix: var nativePathToJpegImage = 'file:///data/data/<package_name>/files/some_dir/some_image.jpg'
-// Android without file prefix: var nativePathToJpegImage = '/data/data/<package_name>/files/some_dir/some_image.jpg'
 
 window.cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, onSaveImageSuccess, onSaveImageError);
 
-// iOS only
 window.cordova.plugins.imagesaver.saveVideoToGallery(nativePathToJpegImage, onSaveImageSuccess, onSaveImageError);
 
 function onSaveImageSuccess() {
@@ -71,25 +49,6 @@ This plugins requires the following usage descriptions:
 - `NSPhotoLibraryAddUsageDescription` specifies the reason for your app to get write-only access to the user's photo library
 
 To add these entries into the `info.plist`, you can use the `edit-config` tag in the `config.xml` like this:
-
-```
-<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need camera access to take pictures</string>
-</edit-config>
-```
-
-```
-<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need to photo library access to get pictures from there</string>
-</edit-config>
-```
-
-```
-<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-    <string>need location access to find things nearby</string>
-</edit-config>
-```
-
 ```
 <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
     <string>need to photo library access to save pictures there</string>
