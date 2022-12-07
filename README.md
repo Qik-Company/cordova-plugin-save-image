@@ -1,5 +1,4 @@
-SaveImage
-======
+# SaveImage
 
 This plugin allows you to save local JPEG image files to the iOS Camera Roll/Photo Library or Android Gallery. Other image mime types are currently not supported.
 The image file to be saved to the Library/Gallery must be available on the device.
@@ -14,36 +13,32 @@ Thanks to all of the above mentioned authors for sharing their code openly.
 
     cordova plugin add cordova-plugin-save-image
 
-Methods
--------
+## Methods
 
 - cordova.plugins.imagesaver.saveImageToGallery
 
-Properties
---------
+## Properties
 
 none
 
 # API reference
 
-imagesaver.saveImageToGallery
-===========================================
+# imagesaver.saveImageToGallery
 
 Save a local JPEG image to the device gallery / camera roll.
 
     cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, successCallback, errorCallback);
 
-Supported Platforms
--------------------
+## Supported Platforms
 
 - iOS, Android
 
-Usage Example
---------------
+## Usage Example
 
 Call the `window.cordova.plugins.imagesaver.saveImageToGallery()` method passing 3 parameters: 1. The native image path for the image to be saved, 2. success callback, 3. error callback
 
 ### Example
+
 ```
 
 // iOS with file prefix: var nativePathToJpegImage = 'file:///var/mobile/Containers/Data/Application/<UUID>/Library/NoCloud/some_dir/some_image.jpg'
@@ -52,11 +47,14 @@ Call the `window.cordova.plugins.imagesaver.saveImageToGallery()` method passing
 // Android without file prefix: var nativePathToJpegImage = '/data/data/<package_name>/files/some_dir/some_image.jpg'
 
 window.cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, onSaveImageSuccess, onSaveImageError);
-                                            
+
+// iOS only
+window.cordova.plugins.imagesaver.saveVideoToGallery(nativePathToJpegImage, onSaveImageSuccess, onSaveImageError);
+
 function onSaveImageSuccess() {
     console.log('--------------success');
 }
-                                            
+
 function onSaveImageError(error) {
     console.log('--------------error: ' + error);
 }
@@ -97,7 +95,6 @@ To add these entries into the `info.plist`, you can use the `edit-config` tag in
     <string>need to photo library access to save pictures there</string>
 </edit-config>
 ```
-
 
 ## License
 
