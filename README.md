@@ -44,8 +44,6 @@ Since iOS 10 it's mandatory to provide an usage description in the `info.plist` 
 
 This plugins requires the following usage descriptions:
 
-- `NSCameraUsageDescription` specifies the reason for your app to access the device's camera.
-- `NSPhotoLibraryUsageDescription` specifies the reason for your app to access the user's photo library.
 - `NSPhotoLibraryAddUsageDescription` specifies the reason for your app to get write-only access to the user's photo library
 
 To add these entries into the `info.plist`, you can use the `edit-config` tag in the `config.xml` like this:
