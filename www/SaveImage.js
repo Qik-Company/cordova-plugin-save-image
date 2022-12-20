@@ -51,4 +51,26 @@ ImageSaver.saveVideoToGallery = function (
   );
 };
 
+ImageSaver.scanPhoto = function (
+  localImagePath,
+  successCallback,
+  failureCallback
+) {
+  if (typeof successCallback != 'function') {
+    throw new Error('SaveImage Error: successCallback is not a function');
+  }
+
+  if (typeof failureCallback != 'function') {
+    throw new Error('SaveImage Error: failureCallback is not a function');
+  }
+
+  return cordova.exec(
+    successCallback,
+    failureCallback,
+    'SaveImage',
+    'scanPhoto',
+    [getLocalImagePathWithoutPrefix(localImagePath)]
+  );
+};
+
 module.exports = ImageSaver;

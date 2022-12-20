@@ -9,6 +9,7 @@ import java.nio.channels.FileChannel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -28,27 +29,37 @@ import android.util.Log;
  */
 public class SaveImage extends CordovaPlugin {
     public static final int WRITE_PERM_REQUEST_CODE = 1;
-    private final String ACTION = "saveImageToGallery";
-    private final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    static private final String ACTION_SAVE_GALLERY = "saveImageToGallery";
+    static private final String ACTION_SCAN_PHOTO = "scanPhoto";
+    static private final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private CallbackContext callbackContext;
     private String filePath;
     
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals(ACTION)) {
+        if (action.equals(ACTION_SAVE_GALLERY)) {
             saveImageToGallery(args, callbackContext);
             return true;
-        } else {
-            return false;
         }
+        if (action.equals(ACTION_SCAN_PHOTO)) {
+            try {
+                String filePath = args.getString(0);
+                scanPhoto(new File(filePath));
+                callbackContext.success(filePath);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
      * Check saveImage arguments and app permissions
      *
      * @param args              JSON Array of args
-     * @param callbackContext   callback id for optional progress reports
+     * @param callback   callback id for optional progress reports
      *
      * args[0] filePath         file path string to image file to be saved to gallery
      */  
@@ -61,7 +72,7 @@ public class SaveImage extends CordovaPlugin {
         	callback.error("Missing filePath");
             return;
         }
-        
+
         if (PermissionHelper.hasPermission(this, WRITE_EXTERNAL_STORAGE)) {
         	Log.d("SaveImage", "Permissions already granted, or Android version is lower than 6");
         	performImageSave();
@@ -75,7 +86,7 @@ public class SaveImage extends CordovaPlugin {
     /**
      * Save image to device gallery
      */
-    private void performImageSave() throws JSONException {
+    private void performImageSave() {
         // create file from passed path
         File srcFile = new File(filePath);
 
@@ -113,12 +124,12 @@ public class SaveImage extends CordovaPlugin {
         }
 
         // Generate image file name using current date and time
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.US).format(new Date());
         File newFile = new File(dstFolder.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
 
         // Read and write image files
-        FileChannel inChannel = null;
-        FileChannel outChannel = null;
+        FileChannel inChannel;
+        FileChannel outChannel;
 
         try {
             inChannel = new FileInputStream(srcFile).getChannel();
@@ -182,12 +193,10 @@ public class SaveImage extends CordovaPlugin {
 				return;
 			}
 		}
-		
-		switch (requestCode) {
-		case WRITE_PERM_REQUEST_CODE:
-			Log.d("SaveImage", "User granted the permission for WRITE_EXTERNAL_STORAGE");
-			performImageSave();
-			break;
-		}
+
+        if (requestCode == WRITE_PERM_REQUEST_CODE) {
+            Log.d("SaveImage", "User granted the permission for WRITE_EXTERNAL_STORAGE");
+            performImageSave();
+        }
 	}
 }

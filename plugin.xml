@@ -1,5 +1,5 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-save-image" version="0.3.1">
+    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-save-image" version="0.3.2">
 
     <name>SaveImage</name>
     <description>This plugin allows you to save an image to the iOS Camera roll / Photo Library or Android Gallery.</description>
@@ -18,7 +18,7 @@
     </js-module>
 
     <!-- android -->
-    <!-- <platform name="android">
+    <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
         </config-file>
@@ -29,7 +29,7 @@
         </config-file>
 
         <source-file src="src/android/SaveImage.java" target-dir="src/com/quiply/cordova/saveimage"/>
-    </platform> -->
+    </platform>
 
     <!-- ios -->
     <platform name="ios">

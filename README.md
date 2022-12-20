@@ -29,6 +29,18 @@ Save a local JPEG image to the device gallery / camera roll.
 
     cordova.plugins.imagesaver.saveImageToGallery(nativePathToJpegImage, successCallback, errorCallback);
 
+# imagesaver.saveVideoToGallery (iOS only)
+
+Save a local video to the device gallery / camera roll.
+
+    cordova.plugins.imagesaver.saveVideoToGallery(nativeVideoPath, successCallback, errorCallback);
+
+# imagesaver.scanPhoto (Android only)
+
+Making picture available in the Android Gallery application and other apps.
+
+    cordova.plugins.imagesaver.scanPhoto(nativeImagePath, successCallback, errorCallback);
+
 ## Supported Platforms
 
 - iOS, Android

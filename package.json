@@ -1,6 +1,6 @@
 {
     "name": "cordova-plugin-save-image",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "cordova": {
         "id": "cordova-plugin-save-image",
         "platforms": [
